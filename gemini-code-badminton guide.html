@@ -1,0 +1,1598 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Badminton Pro-Fit Studio | ระบบจัดสเปกไม้แบด เอ็น และความตึงปอนด์</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      /* ชุดสี 3b: Shuttlecock Mint & Court Green */
+      --court-dark: #0f3d2e;
+      --court-primary: #166549;
+      --court-accent: #10b981;
+      --mint-bg: #eef7f3;
+      --mint-soft: #d1fae5;
+      --mint-border: #a7f3d0;
+      --surface-white: #ffffff;
+      --text-main: #132a22;
+      --text-muted: #527166;
+      --warning-amber: #d97706;
+      --warning-bg: #fef3c7;
+      --error-red: #dc2626;
+      --error-bg: #fee2e2;
+      --shadow-sm: 0 2px 8px rgba(15, 61, 46, 0.06);
+      --shadow-md: 0 10px 25px rgba(15, 61, 46, 0.09);
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --transition: all 0.22s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Kanit', sans-serif;
+    }
+
+    body {
+      background-color: var(--mint-bg);
+      background-image:
+        linear-gradient(to right, rgba(16, 185, 129, 0.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(16, 185, 129, 0.06) 1px, transparent 1px);
+      background-size: 32px 32px;
+      color: var(--text-main);
+      line-height: 1.55;
+      min-height: 100vh;
+      padding-bottom: 48px;
+    }
+
+    /* Header - Sport Tech Dashboard Bar */
+    .topbar {
+      background: linear-gradient(135deg, var(--court-dark) 0%, var(--court-primary) 100%);
+      color: #ffffff;
+      padding: 20px 24px;
+      box-shadow: 0 4px 20px rgba(15, 61, 46, 0.2);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 3px solid var(--court-accent);
+    }
+
+    .topbar-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      font-size: 22px;
+    }
+
+    .brand h1 {
+      font-size: 1.35rem;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+
+    .brand p {
+      font-size: 0.85rem;
+      color: var(--mint-soft);
+      font-weight: 300;
+    }
+
+    .court-badge {
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid var(--court-accent);
+      color: #ecfdf5;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background: #34d399;
+      border-radius: 50%;
+      box-shadow: 0 0 0 4px rgba(52, 211, 153, 0.25);
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 1240px;
+      margin: 28px auto 0;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: 390px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    @media (max-width: 960px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Card Component */
+    .card {
+      background: var(--surface-white);
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(16, 185, 129, 0.22);
+      box-shadow: var(--shadow-md);
+      padding: 24px;
+      transition: var(--transition);
+    }
+
+    .card-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px dashed var(--mint-border);
+    }
+
+    .card-title {
+      font-size: 1.08rem;
+      font-weight: 600;
+      color: var(--court-dark);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Form Controls */
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-main);
+      margin-bottom: 7px;
+    }
+
+    .form-label span.hint {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .input-text,
+    .select-box {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-md);
+      font-size: 0.92rem;
+      color: var(--text-main);
+      background: #f8fafc;
+      transition: var(--transition);
+      outline: none;
+    }
+
+    .input-text:hover,
+    .select-box:hover {
+      border-color: var(--court-accent);
+      background: #ffffff;
+    }
+
+    .input-text:focus,
+    .select-box:focus {
+      border-color: var(--court-primary);
+      background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.18);
+    }
+
+    .input-text.is-error {
+      border-color: var(--error-red);
+      background: #fff5f5;
+    }
+
+    /* Radio Pill Grid */
+    .pill-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .pill-grid.cols-4 {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+    }
+
+    .pill-option {
+      position: relative;
+    }
+
+    .pill-option input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .pill-option label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 9px 6px;
+      border: 1.5px solid #d1fae5;
+      background: #f4fbf8;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      font-size: 0.84rem;
+      font-weight: 500;
+      color: var(--text-main);
+      transition: var(--transition);
+      height: 100%;
+    }
+
+    .pill-option label small {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      font-weight: 300;
+      margin-top: 2px;
+    }
+
+    .pill-option label:hover {
+      border-color: var(--court-accent);
+      background: #e6f7ef;
+      transform: translateY(-1px);
+    }
+
+    .pill-option input:checked + label {
+      background: var(--court-primary);
+      border-color: var(--court-dark);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(22, 101, 73, 0.25);
+    }
+
+    .pill-option input:checked + label small {
+      color: var(--mint-soft);
+    }
+
+    /* Range Slider */
+    .range-wrap {
+      background: #f4fbf8;
+      padding: 11px 14px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--mint-border);
+    }
+
+    .range-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.86rem;
+      margin-bottom: 6px;
+    }
+
+    .range-val {
+      font-weight: 600;
+      color: var(--court-primary);
+      background: var(--mint-soft);
+      padding: 1px 10px;
+      border-radius: 999px;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--court-primary);
+      cursor: pointer;
+    }
+
+    /* Buttons & States */
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .btn {
+      border: none;
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: var(--transition);
+    }
+
+    .btn-primary {
+      flex: 1;
+      background: linear-gradient(135deg, var(--court-primary) 0%, var(--court-accent) 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.45);
+      filter: brightness(1.04);
+    }
+
+    .btn-primary:disabled {
+      background: #cbd5e1;
+      color: #64748b;
+      box-shadow: none;
+      cursor: not-allowed;
+      opacity: 0.75;
+    }
+
+    .btn-secondary {
+      background: #f1f5f9;
+      color: var(--text-muted);
+      border: 1px solid #cbd5e1;
+    }
+
+    .btn-secondary:hover:not(:disabled) {
+      background: #e2e8f0;
+      color: var(--text-main);
+    }
+
+    .btn-outline {
+      background: var(--mint-bg);
+      color: var(--court-primary);
+      border: 1.5px solid var(--court-accent);
+      padding: 8px 14px;
+      font-size: 0.85rem;
+    }
+
+    .btn-outline:hover:not(:disabled) {
+      background: var(--court-primary);
+      color: #ffffff;
+    }
+
+    .btn-outline:disabled {
+      border-color: #cbd5e1;
+      color: #94a3b8;
+      background: #f8fafc;
+      cursor: not-allowed;
+    }
+
+    /* Error Banner */
+    .error-box {
+      display: none;
+      background: var(--error-bg);
+      border: 1px solid #fca5a5;
+      color: var(--error-red);
+      padding: 10px 14px;
+      border-radius: var(--radius-md);
+      font-size: 0.84rem;
+      margin-bottom: 14px;
+      align-items: center;
+      gap: 8px;
+      animation: shake 0.35s ease;
+    }
+
+    .error-box.show {
+      display: flex;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    /* Right Dashboard Area */
+    .dashboard-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 56px 24px;
+      background: var(--surface-white);
+      border-radius: var(--radius-lg);
+      border: 2px dashed var(--mint-border);
+    }
+
+    .empty-icon {
+      width: 76px;
+      height: 76px;
+      margin: 0 auto 16px;
+      background: var(--mint-bg);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 36px;
+      color: var(--court-primary);
+    }
+
+    .empty-state h3 {
+      font-size: 1.2rem;
+      color: var(--court-dark);
+      margin-bottom: 6px;
+    }
+
+    .empty-state p {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      max-width: 460px;
+      margin: 0 auto 18px;
+    }
+
+    .result-area {
+      display: none;
+      flex-direction: column;
+      gap: 22px;
+      animation: fadeUp 0.4s ease;
+    }
+
+    .result-area.active {
+      display: flex;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Top Telemetry Strip */
+    .telemetry-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    @media (max-width: 640px) {
+      .telemetry-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .metric-card {
+      background: var(--surface-white);
+      border-radius: var(--radius-md);
+      padding: 16px 18px;
+      border: 1px solid var(--mint-border);
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .metric-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--court-accent);
+    }
+
+    .metric-label {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    .metric-value {
+      font-size: 1.48rem;
+      font-weight: 700;
+      color: var(--court-dark);
+      margin: 2px 0;
+    }
+
+    .metric-sub {
+      font-size: 0.8rem;
+      color: var(--court-primary);
+      font-weight: 500;
+    }
+
+    /* Racket Visual & Stat Bars */
+    .spec-showcase {
+      display: grid;
+      grid-template-columns: 210px 1fr;
+      gap: 22px;
+      align-items: center;
+    }
+
+    @media (max-width: 680px) {
+      .spec-showcase {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .racket-diagram {
+      background: linear-gradient(180deg, #f0fdf4 0%, #dcfce7 100%);
+      border: 1px solid var(--mint-border);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      text-align: center;
+    }
+
+    .stat-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .stat-row {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .stat-row-top {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.88rem;
+      font-weight: 500;
+    }
+
+    .bar-track {
+      height: 10px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--court-primary), var(--court-accent));
+      border-radius: 999px;
+      width: 0%;
+      transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .spec-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .tag {
+      background: var(--mint-bg);
+      color: var(--court-dark);
+      border: 1px solid var(--mint-border);
+      padding: 4px 11px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    /* Brand Filter Tabs on Result Card */
+    .brand-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+
+    .brand-tab {
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+      color: var(--text-muted);
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .brand-tab:hover {
+      border-color: var(--court-accent);
+      color: var(--court-dark);
+    }
+
+    .brand-tab.active {
+      background: var(--court-dark);
+      border-color: var(--court-dark);
+      color: #ffffff;
+    }
+
+    /* Brand Color Accents */
+    .brand-pill {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 5px;
+      margin-right: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    .brand-yonex { background: #dbeafe; color: #1e40af; }
+    .brand-victor { background: #e0e7ff; color: #3730a3; }
+    .brand-lining { background: #fee2e2; color: #991b1b; }
+
+    /* Recommendations Grid (Rackets & Strings) */
+    .gear-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 18px;
+    }
+
+    @media (max-width: 820px) {
+      .gear-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .gear-item {
+      background: #f8fcfa;
+      border: 1px solid var(--mint-border);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      margin-bottom: 10px;
+      transition: var(--transition);
+    }
+
+    .gear-item:hover {
+      background: #ffffff;
+      border-color: var(--court-accent);
+      box-shadow: var(--shadow-sm);
+      transform: translateY(-2px);
+    }
+
+    .gear-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .gear-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 5px;
+    }
+
+    .gear-name {
+      font-weight: 600;
+      color: var(--court-dark);
+      font-size: 0.98rem;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .gear-badge {
+      font-size: 0.74rem;
+      background: var(--court-primary);
+      color: #ffffff;
+      padding: 2px 8px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+
+    .gear-desc {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      margin-bottom: 7px;
+    }
+
+    .gear-meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 6px;
+      font-size: 0.79rem;
+      color: var(--court-primary);
+      font-weight: 500;
+    }
+
+    /* Warning Box */
+    .coach-note {
+      background: var(--warning-bg);
+      border-left: 4px solid var(--warning-amber);
+      padding: 12px 16px;
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      font-size: 0.87rem;
+      color: #78350f;
+      margin-top: 14px;
+    }
+
+    /* Saved Bag Comparison Table */
+    .saved-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .saved-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius-md);
+      transition: var(--transition);
+    }
+
+    .saved-row:hover {
+      border-color: var(--court-accent);
+      background: #f0fdf4;
+    }
+
+    .btn-del {
+      background: transparent;
+      border: 1px solid #fecaca;
+      color: var(--error-red);
+      padding: 5px 10px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .btn-del:hover {
+      background: var(--error-red);
+      color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Sport Tech Bar -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-icon" aria-hidden="true">🏸</div>
+        <div>
+          <h1>Badminton Pro-Fit Studio</h1>
+          <p>ระบบวิเคราะห์สเปกไม้แบด เอ็น และความตึงปอนด์เฉพาะบุคคล</p>
+        </div>
+      </div>
+      <div class="court-badge">
+        <span class="pulse-dot"></span>
+        <span>Multi-Brand Database (Yonex • Victor • Li-Ning)</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Left Panel: Smart Spec Configurator -->
+    <section class="card" aria-label="แผงตั้งค่าข้อมูลผู้เล่น">
+      <div class="card-header">
+        <h2 class="card-title">⚙️ ข้อมูลโปรไฟล์นักแบด</h2>
+        <span style="font-size: 0.78rem; color: var(--text-muted);">กรอกครบเพื่อปลดล็อกปุ่ม</span>
+      </div>
+
+      <div id="errorBox" class="error-box" role="alert">
+        <span>⚠️</span>
+        <span id="errorText">กรุณากรอกข้อมูลให้ถูกต้อง</span>
+      </div>
+
+      <form id="specForm" novalidate>
+        <!-- ชื่อโปรไฟล์ / ชื่อเล่น -->
+        <div class="form-group">
+          <label class="form-label" for="playerName">
+            <span>ชื่อผู้เล่น / ชื่อเซตอุปกรณ์ *</span>
+            <span class="hint">อย่างน้อย 2 ตัวอักษร</span>
+          </label>
+          <input
+            type="text"
+            id="playerName"
+            class="input-text"
+            placeholder="เช่น นนท์ สายตบ, เซตตีคู่หลังเลิกงาน..."
+            maxlength="40"
+          />
+        </div>
+
+        <!-- ระดับฝีมือ -->
+        <div class="form-group">
+          <div class="form-label">
+            <span>1. ระดับฝีมือและประสบการณ์ *</span>
+          </div>
+          <div class="pill-grid">
+            <div class="pill-option">
+              <input type="radio" name="skill" id="skill-beg" value="beginner" />
+              <label for="skill-beg">มือใหม่<small>ตีทั่วไป/ฝึกพื้นฐาน</small></label>
+            </div>
+            <div class="pill-option">
+              <input type="radio" name="skill" id="skill-int" value="intermediate" />
+              <label for="skill-int">ก๊วนทั่วไป<small>ตีประจำ 2-3 วัน/วีค</small></label>
+            </div>
+            <div class="pill-option">
+              <input type="radio" name="skill" id="skill-adv" value="advanced" />
+              <label for="skill-adv">แข่งขัน<small>เข้าจุดแม่น/แรงสูง</small></label>
+            </div>
+          </div>
+        </div>
+
+        <!-- สไตล์การเล่น -->
+        <div class="form-group">
+          <div class="form-label">
+            <span>2. สไตล์การเล่นหลัก *</span>
+          </div>
+          <div class="pill-grid">
+            <div class="pill-option">
+              <input type="radio" name="style" id="style-atk" value="attack" />
+              <label for="style-atk">สายบุก<small>ตบหนัก ท้ายคอร์ท</small></label>
+            </div>
+            <div class="pill-option">
+              <input type="radio" name="style" id="style-all" value="allround" />
+              <label for="style-all">สมดุล<small>รุก-รับ ครบเครื่อง</small></label>
+            </div>
+            <div class="pill-option">
+              <input type="radio" name="style" id="style-spd" value="speed" />
+              <label for="style-spd">สายไว/รับ<small>ดาดเร็ว หน้าเน็ต</small></label>
+            </div>
+          </div>
+        </div>
+
+        <!-- แบรนด์ไม้แบดที่ชอบ -->
+        <div class="form-group">
+          <div class="form-label">
+            <span>3. แบรนด์ไม้แบดมินตันที่ชอบ</span>
+            <span class="hint">กรองรุ่นแนะนำ</span>
+          </div>
+          <div class="pill-grid cols-4">
+            <div class="pill-option">
+              <input type="radio" name="brand" id="brand-all" value="ALL" checked />
+              <label for="brand-all">ทุกแบรนด์<small>แนะนำรวม</small></label>
+            </div>
+            <div class="pill-option">
+              <input type="radio" name="brand" id="brand-yonex" value="Yonex" />
+              <label for="brand-yonex">Yonex<small>ญี่ปุ่น</small></label>
+            </div>
+            <div class="pill-option">
+              <input type="radio" name="brand" id="brand-victor" value="Victor" />
+              <label for="brand-victor">Victor<small>ไต้หวัน</small></label>
+            </div>
+            <div class="pill-option">
+              <input type="radio" name="brand" id="brand-lining" value="Li-Ning" />
+              <label for="brand-lining">Li-Ning<small>จีน</small></label>
+            </div>
+          </div>
+        </div>
+
+        <!-- พละกำลังข้อมือ -->
+        <div class="form-group">
+          <div class="form-label">
+            <span>4. พละกำลังข้อมือและแขน</span>
+            <span class="hint">มีผลต่อปอนด์และความแข็งก้าน</span>
+          </div>
+          <div class="range-wrap">
+            <div class="range-header">
+              <span>ระดับแรงดีดข้อมือ</span>
+              <span class="range-val" id="powerLabel">ระดับ 3 : ปานกลาง</span>
+            </div>
+            <input type="range" id="wristPower" min="1" max="5" step="1" value="3" />
+          </div>
+        </div>
+
+        <!-- ความต้องการพิเศษของเอ็น -->
+        <div class="form-group">
+          <label class="form-label" for="stringPref">
+            <span>5. คุณสมบัติเอ็นที่เน้นเป็นพิเศษ</span>
+          </label>
+          <select id="stringPref" class="select-box">
+            <option value="repulsion">เน้นเสียงดัง + ลูกดีดเด้ง (Repulsion)</option>
+            <option value="control">เน้นควบคุมทิศทาง + หยอดนิ่ง (Control)</option>
+            <option value="durability">เน้นทนทาน + ไม่ขาดง่าย (Durability)</option>
+          </select>
+        </div>
+
+        <!-- งบประมาณ -->
+        <div class="form-group">
+          <label class="form-label" for="budget">
+            <span>6. งบประมาณรวม (ไม้ + เอ็น)</span>
+          </label>
+          <select id="budget" class="select-box">
+            <option value="entry">ไม่เกิน 2,500 บาท (คุ้มค่าเริ่มต้น)</option>
+            <option value="mid" selected>2,500 – 5,000 บาท (สเปกยอดนิยม)</option>
+            <option value="pro">5,000 บาทขึ้นไป (รุ่นท็อปโปรเพลเยอร์)</option>
+          </select>
+        </div>
+
+        <div class="btn-group">
+          <button type="submit" id="analyzeBtn" class="btn btn-primary" disabled>
+            <span>📊 วิเคราะห์และจัดสเปก</span>
+          </button>
+          <button type="button" id="resetBtn" class="btn btn-secondary">
+            <span>ล้างค่า</span>
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Right Panel: Sport Tech Dashboard -->
+    <section class="dashboard-stack" aria-live="polite">
+      <!-- Empty State -->
+      <div id="emptyState" class="empty-state">
+        <div class="empty-icon">🏸</div>
+        <h3>ยังไม่มีข้อมูลการวิเคราะห์สเปก</h3>
+        <p>
+          กรอกชื่อผู้เล่น เลือกระดับฝีมือ สไตล์การเล่น และแบรนด์ที่ชอบทางด้านซ้าย
+          เพื่อให้ระบบคำนวณ <strong>ความตึงปอนด์ที่แม่นยำ</strong> พร้อมจับคู่รุ่นไม้แบดและเอ็นที่เหมาะกับคุณ
+        </p>
+        <button type="button" id="demoFillBtn" class="btn btn-outline">
+          ✨ ทดลองใส่ข้อมูลตัวอย่าง (สายบุก ก๊วนทั่วไป)
+        </button>
+      </div>
+
+      <!-- Active Result Dashboard -->
+      <div id="resultArea" class="result-area">
+        <!-- Top Telemetry Metrics -->
+        <div class="telemetry-grid">
+          <div class="metric-card">
+            <div class="metric-label">ความตึงเอ็นแนะนำ (Tension)</div>
+            <div class="metric-value" id="resTension">24 - 25 lbs</div>
+            <div class="metric-sub" id="resTensionNote">จุด Sweet Spot กว้าง ตีสบาย</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">น้ำหนัก & จุดศูนย์ถ่วงไม้</div>
+            <div class="metric-value" id="resWeightBal">4U / Head Heavy</div>
+            <div class="metric-sub" id="resBalanceMm">Balance ~298 mm</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">ความแข็งก้าน (Shaft Flex)</div>
+            <div class="metric-value" id="resFlex">Medium</div>
+            <div class="metric-sub" id="resFlexNote">ช่วยส่งแรงดีดในจังหวะเซฟ</div>
+          </div>
+        </div>
+
+        <!-- Racket Telemetry & SVG Diagram -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title" id="profileHeading">📈 ดัชนีประสิทธิภาพสเปกของ: ผู้เล่น</h2>
+            <button type="button" id="saveBagBtn" class="btn btn-outline">
+              <span>+ บันทึกลงกระเป๋าเทียบสเปก</span>
+            </button>
+          </div>
+
+          <div class="spec-showcase">
+            <!-- SVG Interactive Diagram -->
+            <div class="racket-diagram">
+              <svg width="150" height="210" viewBox="0 0 160 220" aria-label="แผนภาพจุดศูนย์ถ่วงไม้แบดมินตัน">
+                <ellipse cx="80" cy="64" rx="44" ry="56" fill="#ffffff" stroke="#0f3d2e" stroke-width="5" />
+                <line x1="55" y1="22" x2="55" y2="106" stroke="#10b981" stroke-width="1.2" stroke-dasharray="3,2" />
+                <line x1="68" y1="12" x2="68" y2="116" stroke="#10b981" stroke-width="1.2" stroke-dasharray="3,2" />
+                <line x1="80" y1="10" x2="80" y2="118" stroke="#10b981" stroke-width="1.2" stroke-dasharray="3,2" />
+                <line x1="92" y1="12" x2="92" y2="116" stroke="#10b981" stroke-width="1.2" stroke-dasharray="3,2" />
+                <line x1="105" y1="22" x2="105" y2="106" stroke="#10b981" stroke-width="1.2" stroke-dasharray="3,2" />
+
+                <line x1="40" y1="42" x2="120" y2="42" stroke="#10b981" stroke-width="1.2" stroke-dasharray="3,2" />
+                <line x1="37" y1="64" x2="123" y2="64" stroke="#10b981" stroke-width="1.2" stroke-dasharray="3,2" />
+                <line x1="40" y1="86" x2="120" y2="86" stroke="#10b981" stroke-width="1.2" stroke-dasharray="3,2" />
+
+                <rect x="75" y="118" width="10" height="10" rx="2" fill="#166549" />
+                <rect x="77" y="128" width="6" height="48" fill="#0f3d2e" />
+                <rect x="73" y="176" width="14" height="38" rx="4" fill="#10b981" />
+                <rect x="72" y="209" width="16" height="6" rx="2" fill="#0f3d2e" />
+
+                <g id="bpMarker" transform="translate(0, 0)">
+                  <circle cx="80" cy="115" r="7" fill="#f59e0b" stroke="#ffffff" stroke-width="2" />
+                  <line x1="25" y1="115" x2="135" y2="115" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="4,3" />
+                </g>
+              </svg>
+              <div style="font-size: 0.76rem; color: var(--court-dark); font-weight: 600; margin-top: 4px;">
+                จุดสีส้ม = จุดศูนย์ถ่วง (Balance Point)
+              </div>
+            </div>
+
+            <!-- Stat Bars -->
+            <div>
+              <div class="stat-list">
+                <div class="stat-row">
+                  <div class="stat-row-top">
+                    <span>💥 พลังตบ (Smash Power)</span>
+                    <span id="statPowerText">85%</span>
+                  </div>
+                  <div class="bar-track"><div class="bar-fill" id="statPowerBar"></div></div>
+                </div>
+
+                <div class="stat-row">
+                  <div class="stat-row-top">
+                    <span>🎯 ความแม่นยำและคอนโทรล (Control)</span>
+                    <span id="statControlText">80%</span>
+                  </div>
+                  <div class="bar-track"><div class="bar-fill" id="statControlBar"></div></div>
+                </div>
+
+                <div class="stat-row">
+                  <div class="stat-row-top">
+                    <span>⚡ ความคล่องตัวหน้าเน็ต (Handling Speed)</span>
+                    <span id="statSpeedText">75%</span>
+                  </div>
+                  <div class="bar-track"><div class="bar-fill" id="statSpeedBar"></div></div>
+                </div>
+
+                <div class="stat-row">
+                  <div class="stat-row-top">
+                    <span>🛡️ ความปลอดภัยต่อข้อมือ (Arm Friendliness)</span>
+                    <span id="statSafeText">90%</span>
+                  </div>
+                  <div class="bar-track"><div class="bar-fill" id="statSafeBar"></div></div>
+                </div>
+              </div>
+
+              <div class="spec-tags" id="specTags"></div>
+            </div>
+          </div>
+
+          <div class="coach-note" id="coachNote"></div>
+        </div>
+
+        <!-- Matched Rackets & Strings -->
+        <div class="gear-grid">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">🏸 รุ่นไม้แบดมินตันที่แมตช์กับคุณ</h3>
+              <span id="racketCountBadge" style="font-size: 0.78rem; color: var(--text-muted);">0 รุ่น</span>
+            </div>
+
+            <!-- Quick Brand Filter Tabs -->
+            <div class="brand-tabs" id="quickBrandTabs" role="tablist" aria-label="ตัวกรองแบรนด์ด่วน">
+              <button type="button" class="brand-tab active" data-brand="ALL">ทั้งหมด</button>
+              <button type="button" class="brand-tab" data-brand="Yonex">Yonex</button>
+              <button type="button" class="brand-tab" data-brand="Victor">Victor</button>
+              <button type="button" class="brand-tab" data-brand="Li-Ning">Li-Ning</button>
+            </div>
+
+            <div id="racketList"></div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">🧵 เอ็นแบดมินตัน & การขึ้นเอ็น</h3>
+            </div>
+            <div id="stringList"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Saved Gear Bag (Comparison) -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">🎒 กระเป๋าเปรียบเทียบสเปกที่บันทึกไว้ (<span id="savedCount">0</span>)</h3>
+          <button type="button" id="clearSavedBtn" class="btn-del" style="display: none;">ลบทั้งหมด</button>
+        </div>
+        <div id="savedContainer">
+          <p style="font-size: 0.88rem; color: var(--text-muted); text-align: center; padding: 14px 0;">
+            ยังไม่มีรายการที่บันทึก — กดปุ่ม <strong>"+ บันทึกลงกระเป๋าเทียบสเปก"</strong> ด้านบนเพื่อเก็บไว้เปรียบเทียบหลายสไตล์
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // ฐานข้อมูลรุ่นไม้แบดมินตันแบบขยาย (ครอบคลุม Yonex, Victor, Li-Ning ครบทุกสไตล์และงบประมาณ)
+    const RACKET_DB = [
+      // ================= ATTACK (สายบุก) =================
+      // Pro
+      { brand: "Yonex", name: "Astrox 88D Pro (3rd Gen)", style: "attack", budget: "pro", price: "~5,800 - 6,500 บ.", spec: "4U • Head Heavy • Stiff", desc: "ไม้สายบุกหลังคอร์ทยอดนิยม คุมจังหวะบุกต่อเนื่องและตบจิกพื้นคอร์ทได้เฉียบคม" },
+      { brand: "Yonex", name: "Astrox 100ZZ", style: "attack", budget: "pro", price: "~6,200 - 6,900 บ.", spec: "4U • Head Heavy • Extra Stiff", desc: "ก้านตัน Hyper Slim ส่งแรงตบได้รุนแรงและแม่นยำที่สุด เหมาะกับผู้เล่นแรงข้อมือสูง" },
+      { brand: "Victor", name: "Thruster Ryuga II Pro", style: "attack", budget: "pro", price: "~5,400 - 6,000 บ.", spec: "4U • Head Heavy • Stiff", desc: "เทคโนโลยี Power Box เฟรมแข็งแรงลดแรงบิด ตบหนักหน่วงสไตล์สายบุกอาชีพ" },
+      { brand: "Victor", name: "Thruster F C Ultra", style: "attack", budget: "pro", price: "~5,500 - 6,200 บ.", spec: "4U • Head Heavy • Medium-Stiff", desc: "หัวหนักที่ให้ความคล่องตัวสูง ตบได้ต่อเนื่องและวางลูกแม่นยำ" },
+      { brand: "Li-Ning", name: "Axforce 90 Dragon Max / Tiger", style: "attack", budget: "pro", price: "~5,600 - 6,400 บ.", spec: "4U • Head Heavy • Stiff", desc: "ก้านบางพิเศษ 6.2mm คืนตัวไว อัดลูกตบเต็มแรงได้ฟีลลิ่งแน่นและดุดัน" },
+      { brand: "Li-Ning", name: "Axforce 100", style: "attack", budget: "pro", price: "~5,900 - 6,600 บ.", spec: "4U • Head Heavy • Extra Stiff", desc: "ตัวท็อปสายพลังของ Li-Ning หัวหนักแน่น ตบทะลุทะลวง" },
+
+      // Mid
+      { brand: "Yonex", name: "Astrox 77 Tour / Play", style: "attack", budget: "mid", price: "~2,600 - 4,200 บ.", spec: "4U • Head Heavy • Medium", desc: "ไม้สายบุกที่ตีง่ายและเป็นมิตรกับข้อมือ ก้านสปริงดีช่วยให้ตบสนุกโดยไม่ล้าแขน" },
+      { brand: "Yonex", name: "Astrox 88D Game", style: "attack", budget: "mid", price: "~2,900 - 3,400 บ.", spec: "4U • Head Heavy • Medium", desc: "ถอดแบบ DNA จากรุ่น Pro ปรับก้านให้ยืดหยุ่นขึ้นเพื่อการส่งแรงที่ง่ายกว่า" },
+      { brand: "Victor", name: "Thruster Ryuga D / Metallic", style: "attack", budget: "mid", price: "~3,200 - 4,500 บ.", spec: "4U • Head Heavy • Medium-Stiff", desc: "หัวหนักตบมันส์ เสียงกระทบลูกแน่น รองรับการขึ้นเอ็นปอนด์สูงได้ดี" },
+      { brand: "Victor", name: "Thruster K 220H II", style: "attack", budget: "mid", price: "~2,500 - 3,100 บ.", spec: "4U • Head Heavy • Medium", desc: "รองรับความตึงสูงสุดถึง 35 lbs แข็งแรงทนทาน ตบหนักคุ้มราคา" },
+      { brand: "Li-Ning", name: "Axforce 60 / 70", style: "attack", budget: "mid", price: "~3,300 - 4,600 บ.", spec: "4U-5U • Head Heavy • Flexible-Med", desc: "ไม้บุกน้ำหนักเบาแต่หัวหนัก ช่วยเพิ่มความเร็วหัวไม้ในการตบจิก" },
+      { brand: "Li-Ning", name: "Tectonic 7i / 6", style: "attack", budget: "mid", price: "~2,900 - 4,200 บ.", spec: "4U-5U • Head Heavy • Medium", desc: "เฟรมลดแรงต้านอากาศ ตบไวและดาดสวนกลับในเกมคู่ได้คล่องตัว" },
+
+      // Entry
+      { brand: "Yonex", name: "Astrox Smash / 99 Play", style: "attack", budget: "entry", price: "~1,400 - 2,200 บ.", spec: "4U-5U • Head Heavy • Hi-Flex", desc: "ก้านอ่อนพิเศษช่วยดีดลูกส่งถึงท้ายคอร์ทง่าย เหมาะสำหรับมือใหม่สายบุก" },
+      { brand: "Victor", name: "Thruster K HMR", style: "attack", budget: "entry", price: "~1,600 - 2,100 บ.", spec: "4U • Head Heavy • Medium", desc: "ไม้สายบุกเริ่มต้นยอดฮิต ทนทานสูง ตบสนุก คุ้มค่าเกินราคา" },
+      { brand: "Li-Ning", name: "Axforce Cannon", style: "attack", budget: "entry", price: "~1,500 - 1,950 บ.", spec: "4U-5U • Head Heavy • Medium-Flex", desc: "ไม้บุกตัวคุ้มจากตระกูล Axforce ก้านดีดง่าย หัวหนักกำลังดีสำหรับผู้เริ่มต้น" },
+
+      // ================= ALL-ROUND (สายสมดุล) =================
+      // Pro
+      { brand: "Yonex", name: "Arcsaber 11 Pro", style: "allround", budget: "pro", price: "~5,800 - 6,500 บ.", spec: "4U • Even Balance • Stiff", desc: "ราชาสายคอนโทรล หน่วงลูกบนหน้าไม้ได้นาน วางลูกหยอดและตัดหยอดแม่นยำระดับตำนาน" },
+      { brand: "Yonex", name: "Astrox 88S Pro (3rd Gen)", style: "allround", budget: "pro", price: "~5,800 - 6,500 บ.", spec: "4U • Slight Head Heavy • Stiff", desc: "ออกแบบมาเพื่อเกมคู่ยุคใหม่ รุก-รับรวดเร็ว คุมหน้าเน็ตและตบซ้ำได้คมกริบ" },
+      { brand: "Victor", name: "DriveX 10 Metallic", style: "allround", budget: "pro", price: "~5,200 - 5,900 บ.", spec: "4U • Even Balance • Stiff", desc: "ก้านคาร์บอนผสมโลหะ คืนตัวไวและนิ่งมาก คุมจังหวะเกมรับเปลี่ยนเป็นรุกได้เฉียบขาด" },
+      { brand: "Victor", name: "Brave Sword 12 SE", style: "allround", budget: "pro", price: "~4,900 - 5,500 บ.", spec: "4U • Even Balance • Medium", desc: "เฟรมทรงดาบตัดอากาศระดับตำนาน ครบเครื่องทั้งเกมดาด เกมรับ และลูกตบฉาบฉวย" },
+      { brand: "Li-Ning", name: "Halbertec 8000 / 9000", style: "allround", budget: "pro", price: "~5,500 - 6,400 บ.", spec: "4U • Even Balance • Medium-Stiff", desc: "สมดุลรุก-รับไร้ที่ติ ให้ฟีลลิ่งแน่นและเสถียรสูงมากในจังหวะวางลูก" },
+      { brand: "Li-Ning", name: "BladeX 800 New", style: "allround", budget: "pro", price: "~5,200 - 5,800 บ.", spec: "4U • Even Balance • Stiff", desc: "หน้าไม้ไวและนิ่ง เหมาะกับผู้เล่นที่ต้องการความสมดุลและความแม่นยำสูง" },
+
+      // Mid
+      { brand: "Yonex", name: "Arcsaber 7 Tour / Play", style: "allround", budget: "mid", price: "~2,600 - 4,200 บ.", spec: "4U • Even Balance • Medium", desc: "ไม้สมดุลยอดนิยม ตีง่ายสบายมือ คุมทิศทางลูกได้นิ่งและแม่นยำ" },
+      { brand: "Victor", name: "DriveX 9X / 7K", style: "allround", budget: "mid", price: "~2,900 - 4,300 บ.", spec: "4U • Even Balance • Medium", desc: "หน้าไม้นิ่ง คืนตัวไว เหมาะกับผู้เล่นก๊วนที่ต้องการความแน่นอนทุกช็อต" },
+      { brand: "Li-Ning", name: "Halbertec 5000 / 6000", style: "allround", budget: "mid", price: "~3,200 - 4,400 บ.", spec: "4U • Even Balance • Medium", desc: "ไม้สายคอนโทรลและออลอะราวด์ที่ตีง่าย คุมเกมเนียนมือทั้งเดี่ยวและคู่" },
+      { brand: "Li-Ning", name: "3D Calibar 600C", style: "allround", budget: "mid", price: "~2,800 - 3,600 บ.", spec: "4U • Even Balance • Medium", desc: "เฟรมตัดอากาศทรงเรขาคณิต ลดแรงต้านลม สวิงคล่องตัวและคุมลูกได้ดี" },
+
+      // Entry
+      { brand: "Yonex", name: "Arcsaber 2 Feel / 11 Play", style: "allround", budget: "entry", price: "~1,500 - 2,300 บ.", spec: "4U • Even Balance • Flexible", desc: "ไม้สมดุลราคาคุ้มค่า ตีง่าย หน้าไม้กว้าง ช่วยให้มือใหม่ตีเข้ากลางไม้ได้บ่อยขึ้น" },
+      { brand: "Victor", name: "DriveX 09 / Arrow Speed", style: "allround", budget: "entry", price: "~1,600 - 2,200 บ.", spec: "4U • Even Balance • Medium-Flex", desc: "น้ำหนักกำลังดี บังคับทิศทางง่าย เหมาะสำหรับฝึกพื้นฐานและตีออกกำลังกาย" },
+      { brand: "Li-Ning", name: "Halbertec Motor", style: "allround", budget: "entry", price: "~1,650 - 2,100 บ.", spec: "4U • Even Balance • Flexible", desc: "รุ่นเริ่มต้นในตระกูล Halbertec ให้ความรู้สึกนุ่มนวล คุมลูกง่ายและไม่สะท้านมือ" },
+
+      // ================= SPEED (สายไว / หน้าเน็ต) =================
+      // Pro
+      { brand: "Yonex", name: "Nanoflare 800 Pro / 1000Z", style: "speed", budget: "pro", price: "~5,900 - 6,800 บ.", spec: "4U • Head Light • Stiff", desc: "ความเร็วหน้าไม้ระดับสูงสุด ออกลูกดาดและสวนกลับได้ไวกว่าคู่แข่งเสี้ยววินาที" },
+      { brand: "Yonex", name: "Nanoflare 700 Pro", style: "speed", budget: "pro", price: "~5,500 - 6,200 บ.", spec: "4U-5U • Head Light • Medium", desc: "หัวเบาที่ให้แรงดีดลูกสูง ตีสบาย คล่องตัวมากในเกมรับและหน้าเน็ต" },
+      { brand: "Victor", name: "Auraspeed 100X", style: "speed", budget: "pro", price: "~5,400 - 6,100 บ.", spec: "4U • Head Light • Medium-Stiff", desc: "ด้ามจับ Free Core ผสานเฟรมความเร็วสูง โดดเด่นเรื่องเกมดาดและจังหวะสวนกลับ" },
+      { brand: "Victor", name: "Jetspeed S 12 II", style: "speed", budget: "pro", price: "~5,000 - 5,600 บ.", spec: "4U • Head Light • Medium", desc: "ไม้สายสปีดหน้าเน็ตในตำนาน ออกหน้าไม้ไวมากและคุมลูกหยอดได้ละเอียด" },
+      { brand: "Li-Ning", name: "BladeX 900 Sun Max / Moon", style: "speed", budget: "pro", price: "~5,600 - 6,300 บ.", spec: "4U • Head Light • Stiff", desc: "ไม้สายสปีดระดับโปรเพลเยอร์ เฟรมบางตัดลมดีเยี่ยม ตอบสนองฉับไว" },
+      { brand: "Li-Ning", name: "Aeronaut 9000C / 9000I", style: "speed", budget: "pro", price: "~5,200 - 5,900 บ.", spec: "4U-5U • Head Light • Medium", desc: "มีช่องระบายอากาศที่หัวไม้ช่วยลดแรงต้านลม สวิงไวและยกเกมรับได้ง่าย" },
+
+      // Mid
+      { brand: "Yonex", name: "Nanoflare 700 Tour / Play", style: "speed", budget: "mid", price: "~2,600 - 4,200 บ.", spec: "4U-5U • Head Light • Medium", desc: "หัวเบาตีสนุก วงสวิงไว ช่วยให้ยกเกมรับจากท้ายคอร์ทและดาดหน้าเน็ตได้ง่าย" },
+      { brand: "Victor", name: "Auraspeed Light Fighter / 90K II", style: "speed", budget: "mid", price: "~2,800 - 4,400 บ.", spec: "4U-5U • Head Light • Medium", desc: "ไม้หัวเบาที่แฝงแรงดีดดีเยี่ยม คล่องตัวสูงมากสำหรับผู้เล่นเกมคู่" },
+      { brand: "Li-Ning", name: "Windstorm 72 / 78+", style: "speed", budget: "mid", price: "~2,900 - 3,900 บ.", spec: "5U-6U (72-78g) • Head Light • Flexible", desc: "น้ำหนักเบาพิเศษดุจสายลม สวิงไวมาก เหมาะกับสายหน้าเน็ตและผู้ที่ชอบไม้เบา" },
+      { brand: "Li-Ning", name: "BladeX 500 / 700", style: "speed", budget: "mid", price: "~2,700 - 3,800 บ.", spec: "4U • Head Light • Medium", desc: "คล่องตัวสูง หน้าไม้ไว ช่วยให้เปลี่ยนจังหวะเกมรับเป็นเกมรุกได้ทันท่วงที" },
+
+      // Entry
+      { brand: "Yonex", name: "Nanoflare Nextage / Drive", style: "speed", budget: "entry", price: "~1,600 - 2,400 บ.", spec: "4U • Head Light • Flexible", desc: "หัวเบา คุมหน้าไม้ง่าย ลดอาการปวดข้อมือ เหมาะสำหรับผู้เริ่มต้นและสายหน้าเน็ต" },
+      { brand: "Victor", name: "Auraspeed 30H / 10", style: "speed", budget: "entry", price: "~1,600 - 2,200 บ.", spec: "4U • Head Light • Flexible", desc: "สวิงเบาคล่องมือ รับลูกตบและดาดโต้กลับได้ง่ายสำหรับผู้เล่นเริ่มต้น" },
+      { brand: "Li-Ning", name: "Super Series SS 2020 / Windstorm", style: "speed", budget: "entry", price: "~1,500 - 2,100 บ.", spec: "5U • Head Light • Flexible", desc: "ไม้เบาราคาประหยัด ตีง่าย สบายข้อมือ เหมาะสำหรับการตีออกกำลังกายเป็นประจำ" }
+    ];
+
+    // ฐานข้อมูลเอ็นแบดมินตัน
+    const STRING_DB = [
+      { name: "Yonex BG66 Ultimax", gauge: "0.65 mm", pref: "repulsion", desc: "เอ็นยอดนิยมอันดับ 1 เสียงตบดังกังวาน แรงดีดสูงมาก ตีสนุกสุดๆ", note: "แนะนำขึ้นตามปอนด์ที่คำนวณ (เส้นเล็กอาจขาดไวหากตบหนักมาก)" },
+      { name: "Yonex Exbolt 63", gauge: "0.63 mm", pref: "repulsion", desc: "เส้นเล็กพิเศษ ดีดเด้งสูงสุดในตระกูล Exbolt แต่ทนทานกว่าเส้น 0.63 ทั่วไป", note: "เหมาะมากสำหรับคนที่ชอบเสียงใสและแรงดีดโดยไม่ต้องออกแรงเยอะ" },
+      { name: "Victor VBS-63 / Li-Ning No.1", gauge: "0.63 - 0.65 mm", pref: "repulsion", desc: "เอ็นสายดีดตัวท็อปจากค่าย Victor และ Li-Ning เสียงใสกังวาน แรงดีดพุ่งไว", note: "เป็นตัวเลือกที่เข้าคู่กับไม้ Victor และ Li-Ning ได้อย่างลงตัว" },
+      { name: "Yonex Aerobite / Aerobite Boost", gauge: "0.67 / 0.61 mm", pref: "control", desc: "เอ็นไฮบริด (สายตั้ง-สายนอนคนละขนาด) เคลือบสารกันลื่น ปั่นลูกหยอดหน้าเน็ตนิ่งกริบ", note: "ควรให้ช่างขึ้นแบบ 4 ปม (4 Knots) เพื่อรักษาแรงตึงที่แม่นยำ" },
+      { name: "Victor VBS-66N / Yonex Skyarc", gauge: "0.66 - 0.69 mm", pref: "control", desc: "ฟีลลิ่งแน่น หนึบหน้าไม้ คุมทิศทางลูกวางและลูกตัดหยอดได้แม่นยำ", note: "ปอนด์ไม่ตกง่าย รักษาความสม่ำเสมอของหน้าไม้ได้ดี" },
+      { name: "Yonex BG65 / BG65 Titanium", gauge: "0.70 mm", pref: "durability", desc: "เอ็นสายอึดระดับตำนาน เส้นหนา ทนทานต่อการตบหนักและการขึ้นปอนด์สูง", note: "แนะนำขึ้นเผื่อ +1 ปอนด์จากค่าปกติ เพราะเอ็นจะมีการยืดตัวเล็กน้อยช่วงแรก" },
+      { name: "Yonex Exbolt 65 / BG80", gauge: "0.65 - 0.68 mm", pref: "durability", desc: "ผสมผสานความทนทานเข้ากับแรงดีดและฟีลลิ่งแข็งแน่น ตบจิกและขาดยาก", note: "ตัวเลือกสมดุลสำหรับคนที่ไม่อยากเปลี่ยนเอ็นบ่อยแต่ยังต้องการประสิทธิภาพสูง" }
+    ];
+
+    // DOM Elements
+    const form = document.getElementById("specForm");
+    const playerNameInput = document.getElementById("playerName");
+    const wristPowerInput = document.getElementById("wristPower");
+    const powerLabel = document.getElementById("powerLabel");
+    const stringPrefSelect = document.getElementById("stringPref");
+    const budgetSelect = document.getElementById("budget");
+    const analyzeBtn = document.getElementById("analyzeBtn");
+    const resetBtn = document.getElementById("resetBtn");
+    const demoFillBtn = document.getElementById("demoFillBtn");
+    const errorBox = document.getElementById("errorBox");
+    const errorText = document.getElementById("errorText");
+
+    const emptyState = document.getElementById("emptyState");
+    const resultArea = document.getElementById("resultArea");
+    const saveBagBtn = document.getElementById("saveBagBtn");
+    const savedContainer = document.getElementById("savedContainer");
+    const savedCount = document.getElementById("savedCount");
+    const clearSavedBtn = document.getElementById("clearSavedBtn");
+    const quickBrandTabs = document.getElementById("quickBrandTabs");
+
+    let currentSpecResult = null;
+    let activeBrandFilter = "ALL";
+    let savedGearList = [];
+
+    const POWER_LABELS = {
+      1: "ระดับ 1 : น้อย (เน้นเบาเซฟแรง)",
+      2: "ระดับ 2 : ค่อนข้างน้อย",
+      3: "ระดับ 3 : ปานกลาง",
+      4: "ระดับ 4 : แข็งแรง (ตบได้ดี)",
+      5: "ระดับ 5 : สูงมาก (ข้อมือแข็งแรง)"
+    };
+
+    wristPowerInput.addEventListener("input", () => {
+      powerLabel.textContent = POWER_LABELS[wristPowerInput.value];
+      validateFormState();
+    });
+
+    function validateFormState() {
+      const nameVal = playerNameInput.value.trim();
+      const skillChecked = document.querySelector('input[name="skill"]:checked');
+      const styleChecked = document.querySelector('input[name="style"]:checked');
+
+      const isReady = nameVal.length >= 2 && Boolean(skillChecked) && Boolean(styleChecked);
+      analyzeBtn.disabled = !isReady;
+
+      if (nameVal.length >= 2) {
+        playerNameInput.classList.remove("is-error");
+        hideError();
+      }
+    }
+
+    playerNameInput.addEventListener("input", validateFormState);
+    document.querySelectorAll('input[name="skill"], input[name="style"]').forEach((el) => {
+      el.addEventListener("change", () => {
+        hideError();
+        validateFormState();
+      });
+    });
+
+    function showError(msg) {
+      errorText.textContent = msg;
+      errorBox.classList.add("show");
+    }
+
+    function hideError() {
+      errorBox.classList.remove("show");
+    }
+
+    // สูตรคำนวณสเปกไม้แบด เอ็น และความตึงปอนด์
+    function calculateBadmintonSpec({ name, skill, style, brand, power, stringPref, budget }) {
+      const baseTensionBySkill = {
+        beginner: 21,
+        intermediate: 24,
+        advanced: 27
+      };
+      const powerOffset = { 1: -1, 2: 0, 3: 0, 4: 1, 5: 2 };
+      const styleOffset = { attack: 1, allround: 0, speed: 0 };
+
+      let minTension = baseTensionBySkill[skill] + powerOffset[power] + styleOffset[style];
+      if (stringPref === "durability") minTension += 1;
+
+      minTension = Math.max(20, Math.min(30, minTension));
+      const maxTension = minTension + 1;
+
+      let weight = "4U (80-84g)";
+      if (skill === "beginner" && power <= 2) weight = "5U (75-79g)";
+      if (skill === "advanced" && style === "attack" && power >= 4) weight = "3U / 4U (83-88g)";
+
+      let balanceLabel = "Even Balance";
+      let balanceMm = "290 - 295 mm";
+      let bpTranslateY = 0;
+
+      if (style === "attack") {
+        balanceLabel = "Head Heavy";
+        balanceMm = "298 - 305 mm";
+        bpTranslateY = -14;
+      } else if (style === "speed") {
+        balanceLabel = "Head Light";
+        balanceMm = "282 - 288 mm";
+        bpTranslateY = 14;
+      }
+
+      let flex = "Medium (ก้านกลาง)";
+      let flexNote = "สมดุลระหว่างแรงดีดและความแม่นยำ";
+      if (skill === "beginner" || power <= 2) {
+        flex = "Flexible (ก้านอ่อน)";
+        flexNote = "ช่วยดีดลูกส่งถึงหลังคอร์ทโดยไม่กินแรง";
+      } else if (skill === "advanced" && power >= 4) {
+        flex = "Stiff (ก้านแข็ง)";
+        flexNote = "ถ่ายทอดแรงตบได้ทันที หน้าไม้ไม่บิดตัว";
+      }
+
+      let powerScore = 65 + (style === "attack" ? 20 : style === "allround" ? 10 : 0) + power * 3;
+      let controlScore = 68 + (style === "allround" ? 18 : 8) + (skill === "advanced" ? 10 : 4);
+      let speedScore = 65 + (style === "speed" ? 22 : style === "allround" ? 10 : 0) + (weight.startsWith("5U") ? 8 : 3);
+      let safeScore = 95 - (minTension - 21) * 3 - (flex.startsWith("Stiff") ? 10 : 0);
+
+      powerScore = Math.min(98, Math.max(55, powerScore));
+      controlScore = Math.min(98, Math.max(60, controlScore));
+      speedScore = Math.min(98, Math.max(55, speedScore));
+      safeScore = Math.min(98, Math.max(52, safeScore));
+
+      // คัดกรองไม้แบดที่ตรงสไตล์และงบประมาณทั้งหมด (เก็บไว้ให้ตัวกรองแบรนด์ทำงานต่อได้ทันที)
+      const allMatchedRackets = RACKET_DB.filter((r) => r.style === style && r.budget === budget);
+      const matchedStrings = STRING_DB.filter((s) => s.pref === stringPref);
+
+      let coachAdvice = "";
+      if (minTension >= 27 && skill !== "advanced") {
+        coachAdvice = "⚠️ ข้อควรระวัง: ความตึงระดับ 27+ ปอนด์ หน้าไม้จะแข็งและจุด Sweet Spot แคบลง หากตีไม่โดนกลางหน้าไม้บ่อยอาจเสี่ยงต่ออาการเจ็บข้อมือหรือข้อศอก (Tennis Elbow)";
+      } else if (style === "attack" && skill === "beginner") {
+        coachAdvice = "💡 คำแนะนำโค้ช: สำหรับมือใหม่สายบุก แนะนำเลือกไม้หัวหนักที่ก้านไม่แข็งจนเกินไป (Medium / Flexible) เพื่อให้ก้านช่วยดีดส่งแรงตบได้ง่ายและไม่ล้าแขน";
+      } else {
+        coachAdvice = `💡 คำแนะนำโค้ช: เซตความตึง ${minTension}-${maxTension} lbs ร่วมกับเอ็นสาย ${
+          stringPref === "repulsion" ? "ดีดเด้ง" : stringPref === "control" ? "คอนโทรล" : "ทนทาน"
+        } จะช่วยให้คุณดึงศักยภาพของไม้ ${balanceLabel} ออกมาได้เต็มประสิทธิภาพที่สุด`;
+      }
+
+      return {
+        id: Date.now(),
+        name,
+        skill,
+        style,
+        preferredBrand: brand,
+        tensionText: `${minTension} - ${maxTension} lbs`,
+        tensionNote: minTension <= 23 ? "หน้าไม้นุ่ม ดีดส่งแรงง่าย" : minTension <= 26 ? "สมดุลแรงดีดและความแน่น" : "หน้าไม้ตึงแน่น ตอบสนองไว",
+        weightBal: `${weight.split(" ")[0]} • ${balanceLabel}`,
+        balanceMm: `จุดศูนย์ถ่วง ~${balanceMm}`,
+        flex,
+        flexNote,
+        bpTranslateY,
+        stats: { powerScore, controlScore, speedScore, safeScore },
+        allRackets: allMatchedRackets,
+        strings: matchedStrings,
+        coachAdvice
+      };
+    }
+
+    // ฟังก์ชันแสดงรายการไม้แบดตามแบรนด์ที่กรอง
+    function renderFilteredRackets(brandFilter) {
+      if (!currentSpecResult) return;
+      activeBrandFilter = brandFilter;
+
+      // อัปเดตสถานะปุ่ม Tab
+      quickBrandTabs.querySelectorAll(".brand-tab").forEach((btn) => {
+        btn.classList.toggle("active", btn.dataset.brand === brandFilter);
+      });
+
+      const filtered =
+        brandFilter === "ALL"
+          ? currentSpecResult.allRackets
+          : currentSpecResult.allRackets.filter((r) => r.brand === brandFilter);
+
+      document.getElementById("racketCountBadge").textContent = `พบ ${filtered.length} รุ่น`;
+
+      if (filtered.length === 0) {
+        document.getElementById("racketList").innerHTML = `
+          <div style="text-align: center; padding: 24px 12px; color: var(--text-muted); font-size: 0.88rem; background: #f8fafc; border-radius: 12px; border: 1px dashed #cbd5e1;">
+            ไม่พบรุ่นไม้ของแบรนด์ <strong>${brandFilter}</strong> ในช่วงงบประมาณนี้ ลองกดดู <strong>"ทั้งหมด"</strong> เพื่อเทียบแบรนด์ใกล้เคียงครับ
+          </div>
+        `;
+        return;
+      }
+
+      const brandClassMap = {
+        Yonex: "brand-yonex",
+        Victor: "brand-victor",
+        "Li-Ning": "brand-lining"
+      };
+
+      document.getElementById("racketList").innerHTML = filtered
+        .map(
+          (r) => `
+          <div class="gear-item">
+            <div class="gear-top">
+              <div class="gear-name">
+                <span class="brand-pill ${brandClassMap[r.brand] || ""}">${r.brand}</span>
+                <span>${r.name}</span>
+              </div>
+              <span class="gear-badge">${r.spec.split("•")[0].trim()}</span>
+            </div>
+            <div class="gear-desc">${r.desc}</div>
+            <div class="gear-meta">
+              <span>สเปก: ${r.spec}</span>
+              <span>งบประมาณ: ${r.price}</span>
+            </div>
+          </div>
+        `
+        )
+        .join("");
+    }
+
+    // คลิกเปลี่ยนแท็บแบรนด์บนการ์ดผลลัพธ์
+    quickBrandTabs.addEventListener("click", (e) => {
+      const tab = e.target.closest(".brand-tab");
+      if (!tab) return;
+      renderFilteredRackets(tab.dataset.brand);
+    });
+
+    // แสดงผลลัพธ์ทั้งหมดบน Dashboard
+    function renderResult(res) {
+      currentSpecResult = res;
+      activeBrandFilter = res.preferredBrand;
+
+      emptyState.style.display = "none";
+      resultArea.classList.add("active");
+
+      document.getElementById("resTension").textContent = res.tensionText;
+      document.getElementById("resTensionNote").textContent = res.tensionNote;
+      document.getElementById("resWeightBal").textContent = res.weightBal;
+      document.getElementById("resBalanceMm").textContent = res.balanceMm;
+      document.getElementById("resFlex").textContent = res.flex.split(" ")[0];
+      document.getElementById("resFlexNote").textContent = res.flexNote;
+      document.getElementById("profileHeading").textContent = `📈 ดัชนีสเปกของ: ${res.name}`;
+
+      document.getElementById("bpMarker").setAttribute("transform", `translate(0, ${res.bpTranslateY})`);
+
+      const { powerScore, controlScore, speedScore, safeScore } = res.stats;
+      document.getElementById("statPowerText").textContent = `${powerScore}%`;
+      document.getElementById("statControlText").textContent = `${controlScore}%`;
+      document.getElementById("statSpeedText").textContent = `${speedScore}%`;
+      document.getElementById("statSafeText").textContent = `${safeScore}%`;
+
+      requestAnimationFrame(() => {
+        document.getElementById("statPowerBar").style.width = `${powerScore}%`;
+        document.getElementById("statControlBar").style.width = `${controlScore}%`;
+        document.getElementById("statSpeedBar").style.width = `${speedScore}%`;
+        document.getElementById("statSafeBar").style.width = `${safeScore}%`;
+      });
+
+      const styleMap = { attack: "สายบุกตบหนัก", allround: "สายสมดุล", speed: "สายไว/หน้าเน็ต" };
+      const skillMap = { beginner: "มือใหม่", intermediate: "ก๊วนทั่วไป", advanced: "ระดับแข่งขัน" };
+      const brandLabel = res.preferredBrand === "ALL" ? "ทุกแบรนด์" : res.preferredBrand;
+
+      document.getElementById("specTags").innerHTML = `
+        <span class="tag">ระดับ: ${skillMap[res.skill]}</span>
+        <span class="tag">สไตล์: ${styleMap[res.style]}</span>
+        <span class="tag">แบรนด์หลัก: ${brandLabel}</span>
+        <span class="tag">ความตึง: ${res.tensionText}</span>
+        <span class="tag">ก้าน: ${res.flex}</span>
+      `;
+
+      document.getElementById("coachNote").textContent = res.coachAdvice;
+
+      // แสดงไม้แบดตามแบรนด์ที่เลือก
+      renderFilteredRackets(res.preferredBrand);
+
+      // แสดงเอ็นแบดมินตัน
+      document.getElementById("stringList").innerHTML = res.strings
+        .map(
+          (s) => `
+          <div class="gear-item">
+            <div class="gear-top">
+              <div class="gear-name">${s.name}</div>
+              <span class="gear-badge">ขนาด ${s.gauge}</span>
+            </div>
+            <div class="gear-desc">${s.desc}</div>
+            <div class="gear-meta">ทริคขึ้นเอ็น: ${s.note}</div>
+          </div>
+        `
+        )
+        .join("");
+
+      saveBagBtn.disabled = false;
+      saveBagBtn.innerHTML = "<span>+ บันทึกลงกระเป๋าเทียบสเปก</span>";
+    }
+
+    // Submit Form
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const nameVal = playerNameInput.value.trim();
+      const skillEl = document.querySelector('input[name="skill"]:checked');
+      const styleEl = document.querySelector('input[name="style"]:checked');
+      const brandEl = document.querySelector('input[name="brand"]:checked');
+
+      if (nameVal.length < 2) {
+        playerNameInput.classList.add("is-error");
+        showError("กรุณากรอกชื่อผู้เล่นหรือชื่อเซตอย่างน้อย 2 ตัวอักษร");
+        return;
+      }
+      if (!skillEl || !styleEl) {
+        showError("กรุณาเลือกระดับฝีมือและสไตล์การเล่นให้ครบถ้วน");
+        return;
+      }
+
+      hideError();
+      const specData = calculateBadmintonSpec({
+        name: nameVal,
+        skill: skillEl.value,
+        style: styleEl.value,
+        brand: brandEl ? brandEl.value : "ALL",
+        power: Number(wristPowerInput.value),
+        stringPref: stringPrefSelect.value,
+        budget: budgetSelect.value
+      });
+
+      renderResult(specData);
+    });
+
+    // ปุ่มล้างค่า
+    resetBtn.addEventListener("click", () => {
+      form.reset();
+      document.getElementById("brand-all").checked = true;
+      powerLabel.textContent = POWER_LABELS[3];
+      playerNameInput.classList.remove("is-error");
+      hideError();
+      validateFormState();
+      resultArea.classList.remove("active");
+      emptyState.style.display = "block";
+      currentSpecResult = null;
+    });
+
+    // ปุ่มใส่ข้อมูลตัวอย่างจาก Empty State
+    demoFillBtn.addEventListener("click", () => {
+      playerNameInput.value = "นนท์ สายตบประจำก๊วน";
+      document.getElementById("skill-int").checked = true;
+      document.getElementById("style-atk").checked = true;
+      document.getElementById("brand-all").checked = true;
+      wristPowerInput.value = 4;
+      powerLabel.textContent = POWER_LABELS[4];
+      stringPrefSelect.value = "repulsion";
+      budgetSelect.value = "mid";
+
+      validateFormState();
+      form.dispatchEvent(new Event("submit"));
+    });
+
+    // ระบบบันทึกสเปกลงกระเป๋าเปรียบเทียบ
+    saveBagBtn.addEventListener("click", () => {
+      if (!currentSpecResult) return;
+
+      const visibleRackets =
+        activeBrandFilter === "ALL"
+          ? currentSpecResult.allRackets
+          : currentSpecResult.allRackets.filter((r) => r.brand === activeBrandFilter);
+
+      const recommendedRacketName = visibleRackets[0]
+        ? `${visibleRackets[0].brand} ${visibleRackets[0].name}`
+        : currentSpecResult.allRackets[0]?.name || "-";
+
+      const entryId = `${currentSpecResult.id}-${activeBrandFilter}`;
+      if (savedGearList.some((item) => item.entryId === entryId)) return;
+
+      savedGearList.unshift({
+        entryId,
+        name: currentSpecResult.name,
+        brandTag: activeBrandFilter === "ALL" ? "ทุกแบรนด์" : activeBrandFilter,
+        weightBal: currentSpecResult.weightBal,
+        tensionText: currentSpecResult.tensionText,
+        racketName: recommendedRacketName,
+        stringName: currentSpecResult.strings[0]?.name || "-"
+      });
+
+      renderSavedList();
+      saveBagBtn.disabled = true;
+      saveBagBtn.innerHTML = "<span>✓ บันทึกลงกระเป๋าแล้ว</span>";
+    });
+
+    function renderSavedList() {
+      savedCount.textContent = savedGearList.length;
+      clearSavedBtn.style.display = savedGearList.length > 0 ? "inline-block" : "none";
+
+      if (savedGearList.length === 0) {
+        savedContainer.innerHTML = `
+          <p style="font-size: 0.88rem; color: var(--text-muted); text-align: center; padding: 14px 0;">
+            ยังไม่มีรายการที่บันทึก — กดปุ่ม <strong>"+ บันทึกลงกระเป๋าเทียบสเปก"</strong> ด้านบนเพื่อเก็บไว้เปรียบเทียบหลายสไตล์
+          </p>
+        `;
+        return;
+      }
+
+      savedContainer.innerHTML = `<div class="saved-list">
+        ${savedGearList
+          .map(
+            (item) => `
+          <div class="saved-row">
+            <div>
+              <div style="font-weight: 600; color: var(--court-dark);">
+                ${item.name} <span style="font-size: 0.76rem; font-weight: 500; color: var(--court-primary); background: var(--mint-soft); padding: 1px 8px; border-radius: 999px;">${item.brandTag}</span>
+              </div>
+              <div style="font-size: 0.82rem; color: var(--text-muted);">
+                ${item.weightBal} • <strong>${item.tensionText}</strong> • แนะนำ: ${item.racketName} + ${item.stringName}
+              </div>
+            </div>
+            <button type="button" class="btn-del" onclick="removeSavedItem('${item.entryId}')">ลบออก</button>
+          </div>
+        `
+          )
+          .join("")}
+      </div>`;
+    }
+
+    window.removeSavedItem = function (entryId) {
+      savedGearList = savedGearList.filter((item) => item.entryId !== entryId);
+      renderSavedList();
+    };
+
+    clearSavedBtn.addEventListener("click", () => {
+      savedGearList = [];
+      renderSavedList();
+    });
+  </script>
+</body>
+</html>
